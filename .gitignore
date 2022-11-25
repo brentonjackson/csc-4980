@@ -1,3 +1,6 @@
+.vscode/
 depthai-python/
 Assignment1/cv_env/
-.vscode/
+Assignment1/cv_env/bin
+Assignment1/cv_env/lib
+Assignment1/cv_env/include
