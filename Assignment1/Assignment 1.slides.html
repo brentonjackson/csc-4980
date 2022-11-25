@@ -14659,7 +14659,84 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Hi. Welcome to my Jupyter Notebook</p>
+<h1 id="Assignment-1">Assignment 1<a class="anchor-link" href="#Assignment-1">&#182;</a></h1>
+</div>
+</div>
+</div>
+</div><div class="fragment" >
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Github repo for assignment: <a href="https://github.com/brentonjackson/csc-4980/tree/master/Assignment1">https://github.com/brentonjackson/csc-4980/tree/master/Assignment1</a></p>
+<p>I'll be using Python for the assignments in this class, as opposed to Matlab.</p>
+
+</div>
+</div>
+</div>
+</div></div></section></section><section ><section >
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Part-A:-Fundamentals">Part A: Fundamentals<a class="anchor-link" href="#Part-A:-Fundamentals">&#182;</a></h2><p>Go over camera calibration toolbox and calibrate camera.</p>
+<p>It may be worth mentioning that in the <a href="https://docs.luxonis.com/projects/hardware/en/latest/pages/guides/calibration.html">DepthAI documentation</a>, for the nonmodular cameras, they've already been calibrated before shipment so recalibration isn't needed.</p>
+
+</div>
+</div>
+</div>
+</div><div class="fragment" >
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>However, I've calibrated the camera by following directions at this link as a learning exercise: <a href="https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html">https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html</a></p>
+<p>Below is the code I used to do this, in Python (skipped in slideshow), and before and after images:</p>
+
+</div>
+</div>
+</div>
+</div></div></section><section >
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Distorted image:</p>
+<p><img src="https://github.com/brentonjackson/csc-4980/blob/master/opencv-samples/left12.jpg?raw=true" alt="Distorted image" /></p>
+
+</div>
+</div>
+</div>
+</div></section><section >
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Image after calibration and undistortion:</p>
+<p><img src="calibresult.png" alt="Undistorted image" /></p>
+
+</div>
+</div>
+</div>
+</div></section><section >
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>As you can see from the curved lines in the first image, there was a considerable amount of radial distortion present.</p>
+<p>That was fixed in the latter image.</p>
 
 </div>
 </div>
@@ -14671,9 +14748,30 @@ div.jp-OutputPrompt {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>This is Assignment 1.
-The task is to first, calibrate my camera.
-Then I will calculate the distance of an object from my camera.</p>
+<h2 id="Part-B:-Matlab/Python-Prototyping">Part B: Matlab/Python Prototyping<a class="anchor-link" href="#Part-B:-Matlab/Python-Prototyping">&#182;</a></h2>
+</div>
+</div>
+</div>
+</div><div class="fragment" >
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Write a MATLAB/Python script to find the real world dimensions (e.g. diameter of a ball, side length of a cube) of an object using perspective projection equations.</p>
+
+</div>
+</div>
+</div>
+</div></div><div class="fragment" >
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Validate using an experiment where you image an object using your camera from a specific distance (choose any distance but ensure you are able to measure it accurately) between the object and camera.</p>
 
 </div>
 </div>
@@ -14694,7 +14792,7 @@ Then I will calculate the distance of an object from my camera.</p>
 </div>
 </div>
 
-</div></section></section>
+</div></div></section></section>
 </div>
 </div>
 </body>
