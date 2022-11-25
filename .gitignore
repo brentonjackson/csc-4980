@@ -1,6 +1,4 @@
 .vscode/
 depthai-python/
 Assignment1/cv_env/
-Assignment1/cv_env/bin
-Assignment1/cv_env/lib
-Assignment1/cv_env/include
+Assignment1/.ipynb_checkpoints
