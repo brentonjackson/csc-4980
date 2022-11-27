@@ -28,7 +28,7 @@ args = vars(ap.parse_args())
 if (not args["image"]) :
     subprocess.run(['python3', 'capture_img.py'])
 imgName = args["image"] or "opencv_frame1.png"
-dist = args["distance"] or 15 # distance from camera in inches
+dist = int(args["distance"]) or 15 # distance from camera in inches
 
 
 # 2. Find height of object (in image) by allowing user to select two points on image
