@@ -23,7 +23,7 @@
 import argparse
 import subprocess
 from dist_between_pts import get_dims_2D
-# import calibrate_camera as cam_params # import calculated intrinsic and extrinsic parameters of camera
+from calibrate_camera import newcameramtx as camera_matrix # import calculated intrinsic and extrinsic parameters of camera
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -36,9 +36,16 @@ args = vars(ap.parse_args())
 if (not args["image"]) :
     subprocess.run(['python3', 'capture_img.py'])
 imgName = args["image"] or "opencv_frame1.png"
-dist = args["distance"] or 20 # distance from camera in inches
+dist = args["distance"] or 15 # distance from camera in inches
 
 
 # 2. Find height of object (in image) by allowing user to select two points on image
 dist_image = get_dims_2D(imgName=imgName)
 
+
+# 3. Use perspective projection equations to convert our desired dimension to 3D, real world values and units
+# equation: real_dist = dist_image * dist_from_camera / focal_len
+focal_len = (camera_matrix[0][0] + camera_matrix[1][1]) / 2 # avg of fx and fy
+real_dist = dist_image * dist / focal_len
+
+print("real world distance: ", real_dist, '(in dist units)')
