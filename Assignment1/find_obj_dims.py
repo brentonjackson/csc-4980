@@ -20,34 +20,25 @@
 # viewport position Vy
 # viewport position Vz = d
 
-import cv2 as cv
-import depthai as dai
 import argparse
 import subprocess
+from dist_between_pts import get_dims_2D
+# import calibrate_camera as cam_params # import calculated intrinsic and extrinsic parameters of camera
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=False, help="Path to the image")
+ap.add_argument("-d", "--distance", required=False, help="Distance of object from camera")
 args = vars(ap.parse_args())
 
 # 1. Grab image with object in it
-print(args)
 # if no image argument specified, capture new image
 if (not args["image"]) :
     subprocess.run(['python3', 'capture_img.py'])
-
 imgName = args["image"] or "opencv_frame1.png"
+dist = args["distance"] or 20 # distance from camera in inches
 
 
 # 2. Find height of object (in image) by allowing user to select two points on image
+dist_image = get_dims_2D(imgName=imgName)
 
-# load the image, clone it, and setup the mouse callback function
-image = cv.imread(imgName)
-clone = image.copy()
-cv.namedWindow("image")
-# cv.setMouseCallback("image", capture_height)
-
-cv.imshow("object img", image)
-
-# process two click events by clicking and using spacebar to accept click
-k = cv.waitKey(0)
