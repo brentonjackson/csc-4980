@@ -5,20 +5,12 @@
 # Date: 11/25/22
 
 # parameters needed (inputs):
-# canvas position Cx
-# canvas position Cy
-# canvas height (image ht) Ch
-# canvas width (image width) Cw
-# viewport width (real-world) Vw
-# viewport height (real-world) Vh
-# viewport distance (real-world) from camera d
-
+# image
+# viewport distance (real-world) from camera dist
 
 # desired output:
-# viewport coordinates corresponding to canvas position
-# viewport position Vx
-# viewport position Vy
-# viewport position Vz = d
+# viewport dist corresponding to dist from 2d image
+
 
 import argparse
 import subprocess
