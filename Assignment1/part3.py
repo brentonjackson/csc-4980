@@ -47,9 +47,6 @@ camRgb.setBoardSocket(dai.CameraBoardSocket.RGB)
 camRgb.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P)
 camRgb.setVideoSize(1920, 1080)
 
-xoutVideo.input.setBlocking(False)
-xoutVideo.input.setQueueSize(1)
-
 # Stereo Depth Properties
 camLeft.setBoardSocket(dai.CameraBoardSocket.LEFT)
 camRight.setBoardSocket(dai.CameraBoardSocket.RIGHT)
@@ -78,21 +75,15 @@ stereo.syncedLeft.link(xoutLeft.input)
 stereo.syncedRight.link(xoutRight.input)
 stereo.disparity.link(xoutDisparity.input)
 
-
-streams = ["left", "right"]
-streams.append("disparity")
-
-
-
-
-
-
+# set stream names for depth streams
+streams = ["left", "right", "disparity"]
 
 
 
 # Connect to device and start pipeline
 with dai.Device(pipeline) as device:
-
+    print("RGB Framerate: ", camRgb.getFps())
+    print("Depth Framerate: ", camLeft.getFps())
     # queue for RGB
     video = device.getOutputQueue(name="video", maxSize=1, blocking=False)
     
@@ -107,8 +98,6 @@ with dai.Device(pipeline) as device:
         cv2.imshow("video", videoIn.getCvFrame())
         if cv2.waitKey(1) == ord('q'):
             break
-        
-        
         
         # show depth stream video
         for q in qList:
