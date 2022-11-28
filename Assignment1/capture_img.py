@@ -6,7 +6,6 @@
 
 import cv2 as cv
 import depthai as dai
-import argparse
 
 
 # Create pipeline
