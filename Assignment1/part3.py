@@ -10,11 +10,6 @@ import depthai as dai
 import numpy as np
 
 
-outRectified = False  # Output and display rectified streams
-lrcheck = False  # Better handling for occlusions
-extended = False  # Closer-in minimum depth, disparity range is doubled
-subpixel = False  # Better accuracy for longer distance, fractional disparity 32-levels
-depth = False  # Display depth frames
 res = dai.MonoCameraProperties.SensorResolution.THE_720_P
 median = dai.StereoDepthProperties.MedianFilter.KERNEL_7x7
 
@@ -56,9 +51,6 @@ for monoCam in (camLeft, camRight):  # Common config
 stereo.setDefaultProfilePreset(dai.node.StereoDepth.PresetMode.HIGH_DENSITY)
 stereo.initialConfig.setMedianFilter(median)  # KERNEL_7x7 default
 stereo.setRectifyEdgeFillColor(0)  # Black, to better see the cutout
-stereo.setLeftRightCheck(lrcheck)
-stereo.setExtendedDisparity(extended)
-stereo.setSubpixel(subpixel)
 
 xoutLeft.setStreamName("left")
 xoutRight.setStreamName("right")
@@ -99,7 +91,7 @@ with dai.Device(pipeline) as device:
         if cv2.waitKey(1) == ord('q'):
             break
         
-        # show depth stream video
+        # show depth stream video along with left and right mono cameras
         for q in qList:
             name = q.getName()
             frame = q.get().getCvFrame()
