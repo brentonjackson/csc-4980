@@ -10,7 +10,7 @@ import depthai as dai
 import numpy as np
 
 
-res = dai.MonoCameraProperties.SensorResolution.THE_720_P
+res = dai.MonoCameraProperties.SensorResolution.THE_480_P
 median = dai.StereoDepthProperties.MedianFilter.KERNEL_7x7
 
 def getDisparityFrame(frame):
@@ -45,7 +45,7 @@ camRgb.setVideoSize(1920, 1080)
 # Stereo Depth Properties
 camLeft.setBoardSocket(dai.CameraBoardSocket.LEFT)
 camRight.setBoardSocket(dai.CameraBoardSocket.RIGHT)
-for monoCam in (camLeft, camRight):  # Common config
+for monoCam in (camLeft, camRight):
     monoCam.setResolution(res)
 
 stereo.setDefaultProfilePreset(dai.node.StereoDepth.PresetMode.HIGH_DENSITY)
