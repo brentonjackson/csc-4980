@@ -6,21 +6,10 @@
 # Author: Brenton Jackson
 # Date: 11/28/22
 
-# parameters needed (inputs):
-# image
-# viewport distance (real-world) from camera dist
-
-# desired output:
-# viewport dist corresponding to dist from 2d image
-
-
-#!/usr/bin/env python3
-
 from math import ceil
 from pathlib import Path
 import cv2
 import depthai as dai
-import numpy as np
 import time
 import argparse
 
