@@ -6,7 +6,6 @@
 # Date: 12/1/22
 
 import argparse
-from tracemalloc import start
 import cv2
 import time
 import depthai as dai
