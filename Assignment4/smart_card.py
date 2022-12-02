@@ -37,8 +37,6 @@
 # ** due to technical difficulties at the last second, we have to continue this
 # without the raspberry pi **
 
-# 1. create app that can identify and track rectangular objects within our bounding box
-
 from math import ceil
 from pathlib import Path
 import cv2
@@ -142,13 +140,11 @@ with dai.Device(pipeline) as device:
             startTime = current_time
 
         frame = imgFrame.getCvFrame()
-        frame_orig = frame.copy()
         # make copy of frame to preserve original value without
         # object detection information overlayed
+        frame_orig = frame.copy() 
         trackletsData = track.tracklets
-        for t in trackletsData:
-            # print(labelMap[t.label] == "bottle")
-            
+        for t in trackletsData:            
             roi = t.roi.denormalize(frame.shape[1], frame.shape[0])
             x1 = int(roi.topLeft().x)
             y1 = int(roi.topLeft().y)
@@ -159,7 +155,7 @@ with dai.Device(pipeline) as device:
             height = abs(y2 - y1)
             focal_len = 457
 
-            # if card is close enough is detected, emit green light
+            # if card is close enough is detected
             if int(t.spatialCoordinates.z) < 3000 and labelMap[t.label] == "bottle":
                 frameNum += 1
                 print(frameNum)
@@ -174,8 +170,10 @@ with dai.Device(pipeline) as device:
                     device.close()
                     cv2.imwrite(filename + ".png", frame_orig)
                     cv2.destroyWindow("tracker") # close tracking window after capturing last frame
-                    time.sleep(1)
-                    ret = subprocess.run(['python3', 'record_video.py', '-n', filename], check=True)
+                    print('recording starting in 5 seconds...')
+                    time.sleep(3)
+                    # has a couple additional second delay to start subprocess and run it
+                    ret = subprocess.run(['python3', 'record_video.py', '-n', filename, '-a'], check=True)
                     if ret.returncode != 0:
                         # error
                         print(ret.returncode)
