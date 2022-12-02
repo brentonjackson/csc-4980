@@ -45,9 +45,7 @@ import cv2
 import depthai as dai
 import time
 import argparse
-
-from numpy import record
-# from gpiozero import LED
+import subprocess
 
 labelMap = ["background", "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow",
             "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
@@ -56,12 +54,6 @@ nnPathDefault = str((Path(__file__).parent / Path('../depthai-python/examples/mo
 parser = argparse.ArgumentParser()
 parser.add_argument('nnPath', nargs='?', help="Path to mobilenet detection network blob", default=nnPathDefault)
 args = parser.parse_args()
-
-
-# setup LEDs
-# redLed = LED(24) # gpio name, not physical pin #
-# greenLed = LED(25)
-
 
 
 # Create pipeline
@@ -106,7 +98,7 @@ spatialDetectionNetwork.setDepthLowerThreshold(100)
 spatialDetectionNetwork.setDepthUpperThreshold(5000)
 
 
-objectTracker.setDetectionLabelsToTrack([5, 15])  # track only person
+objectTracker.setDetectionLabelsToTrack([5, 15])  # track bottle or person
 # possible tracking types: ZERO_TERM_COLOR_HISTOGRAM, ZERO_TERM_IMAGELESS, SHORT_TERM_IMAGELESS, SHORT_TERM_KCF
 objectTracker.setTrackerType(dai.TrackerType.ZERO_TERM_COLOR_HISTOGRAM)
 # take the smallest ID when new object is tracked, possible options: SMALLEST_ID, UNIQUE_ID
@@ -137,10 +129,7 @@ with dai.Device(pipeline) as device:
     fps = 0
     color = (255, 255, 255)
 
-    cap = cv2.VideoCapture(0)
-    # Define the codec
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    vidId = 0
+    frameNum = 0
     while(True):
         imgFrame = preview.get()
         track = tracklets.get()
@@ -153,13 +142,10 @@ with dai.Device(pipeline) as device:
             startTime = current_time
 
         frame = imgFrame.getCvFrame()
+        frame_orig = frame.copy()
+        # make copy of frame to preserve original value without
+        # object detection information overlayed
         trackletsData = track.tracklets
-        
-
-        record_ready = False
-        recording = False
-        videoCreated = False
-
         for t in trackletsData:
             # print(labelMap[t.label] == "bottle")
             
@@ -175,28 +161,30 @@ with dai.Device(pipeline) as device:
 
             # if card is close enough is detected, emit green light
             if int(t.spatialCoordinates.z) < 3000 and labelMap[t.label] == "bottle":
-            #     greenLed.on()
-                cv2.imwrite("capture{}.png".format(t.id), frame)
-                # create VideoWriter object
-                out = cv2.VideoWriter("capture{}.avi".format(t.id), fourcc, 20.0, (640,  480))
-                videoCreated = True
-                record_ready = True
-                break
-                
-            # else:
-            #     greenLed.off()
+                frameNum += 1
+                print(frameNum)
+                if frameNum > 30:
+                    # delay to let user stabilize the camera. upper limit on fps is 30,
+                    # so min delay would be 1 second after first detecting object
+                    # expected delay is ~2 seconds, since avg fps is ~15-25
+        
+                    filename = "capture{}".format(t.id)
+                    # create video, using -a flag to specify .mov file format
+                    # seems I must detach from this device to be able to connect again.
+                    device.close()
+                    cv2.imwrite(filename + ".png", frame_orig)
+                    cv2.destroyWindow("tracker") # close tracking window after capturing last frame
+                    time.sleep(1)
+                    ret = subprocess.run(['python3', 'record_video.py', '-n', filename], check=True)
+                    if ret.returncode != 0:
+                        # error
+                        print(ret.returncode)
+                        print('video was not captured for {}'.format(filename))
+                    else:
+                        print('saved video successfully')
+                        print('quitting...')
+                        quit()
             
-            # wait for 5s for card to stabilize
-            # time.sleep(5)
-            # if green led still on, take snapshot of frame
-            # if greenLed.is_lit:
-            #     greenLed.blink(on_time=0.25, off_time=0.25)
-                # cv2.imwrite("capture{id}.png".format(t.id), frame)
-            #     greenLed.off()
-                # record_ready = True
-            
-
-
             try:
                 label = labelMap[t.label]
             except:
@@ -217,27 +205,6 @@ with dai.Device(pipeline) as device:
         cv2.putText(frame, "NN fps: {:.2f}".format(fps), (2, frame.shape[0] - 4), cv2.FONT_HERSHEY_TRIPLEX, 0.4, color)
 
         cv2.imshow("tracker", frame)
-        if record_ready:
-            while recording:
-                ret, vidFrame = cap.read()
-                startTime = time.time()
-                if not ret:
-                    print("Can't receive frame (stream end?). Exiting ...")
-                    break
-                # write the frame
-                out.write(vidFrame)
-                cv2.imshow('frame', vidFrame)
-                currTime = time.time()
-                if (currTime - startTime) > 5:
-                    recording = False
-                    break
-                if cv2.waitKey(1) == ord('q'):
-                    break
-        # Release everything if job is finished
-        if videoCreated:
-            cap.release()
-            out.release()
-            vidId += 1
 
         if cv2.waitKey(1) == ord('q'):
             break
