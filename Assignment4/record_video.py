@@ -13,6 +13,7 @@ from RGBPipeline import RGBPipeline
 import threading
 import subprocess
 import sounddevice as sd
+import soundfile as sf
 from scipy.io.wavfile import write
 import os
 
@@ -47,6 +48,7 @@ def record_vid():
 
         video = device.getOutputQueue(rgb_pipeline.getStreamName(), maxSize=1, blocking=False)
         startTime = time.monotonic()
+        print('recording video frames')
         while recording == True or elapsedTime < duration:
             videoIn = video.get()
             vidFrame = videoIn.getCvFrame()
@@ -55,7 +57,6 @@ def record_vid():
             # Visualizing the frame on slower hosts might have overhead
             
             # write the frame
-            print('recording video frames')
             out.write(vidFrame)
             # cv2.imshow('frame', vidFrame)
             currTime = time.monotonic()
@@ -80,6 +81,16 @@ def record_audio():
     write(audio_filename, rate, myrecording)  # Save as WAV file 
     
 def start_AVrecording():
+    # play 3 beeps
+    data, fs = sf.read('beep.wav')
+    for i in range(0, 2):
+        sd.play(data, fs)
+        sd.wait()
+        time.sleep(0.9)
+    sd.play(data, fs)
+    # sd.wait()
+    
+    print('****  recording starting in 1s  ****')
     threading.Thread(target=record_vid).start()
     threading.Thread(target=record_audio).start()
 
