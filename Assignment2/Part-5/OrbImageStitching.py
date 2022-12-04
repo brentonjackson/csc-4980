@@ -44,8 +44,8 @@ def TransformImageToGrayScale(result):
     return result
 
 
-img_train = cv2.imread("../#1/Amani_capture_isp_1.png")
-img_query = cv2.imread("../#1/Amani_capture_isp_2.png")
+img_train = cv2.imread("../Part-1/Amani_capture_isp_1.png")
+img_query = cv2.imread("../Part-1/Amani_capture_isp_2.png")
 gray_img_train = cv2.cvtColor(img_train, cv2.COLOR_RGB2GRAY)
 gray_img_query = cv2.cvtColor(img_query, cv2.COLOR_RGB2GRAY)
 kps_train, features_train = GetImageKeyPoints(gray_img_train)
@@ -64,4 +64,5 @@ imageResult[0:img_query.shape[0], 0:img_query.shape[1]] = img_query
 imageResult = TransformImageToGrayScale(imageResult)
 plt.imshow(imageResult)
 plt.show()
+cv2.imwrite("orboutput.png", imageResult)
 
