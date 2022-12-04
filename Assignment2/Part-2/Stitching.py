@@ -17,6 +17,7 @@ stitcher = cv2.Stitcher_create()
 print(stitched)
 if status == 0:
 	cv2.imshow("Stitched images", stitched)
+	cv2.imwrite('stitched.png', stitched)
 	cv2.waitKey(0)
 else:
 	print("Failed to strich")
