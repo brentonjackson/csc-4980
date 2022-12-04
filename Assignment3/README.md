@@ -2,7 +2,7 @@
 
 ## Submission in Classroom:
 
-**_Submission: [Here](https://github.com/brentonjackson/csc-4980/blob/master/Assignment3/Assignment%303.ipynb)_**
+**_Submission: [Here](https://github.com/brentonjackson/csc-4980/blob/master/Assignment3/Assignment%203.ipynb)_**
 
 Camera images of paper worksheets will NOT be accepted
 
