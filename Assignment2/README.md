@@ -4,10 +4,6 @@
 
 **_Submission: [Here](https://github.com/brentonjackson/csc-4980/blob/master/Assignment2/Assignment%201.ipynb)_**
 
-**_Demo:_**
-
-![Link]()
-
 Camera images of paper worksheets will NOT be accepted
 
 - **Python:** submit a jupyter notebook and the .py files associated
