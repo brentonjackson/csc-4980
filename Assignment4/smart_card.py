@@ -171,7 +171,7 @@ with dai.Device(pipeline) as device:
                     cv2.imwrite(filename + ".png", frame_orig)
                     cv2.destroyWindow("tracker") # close tracking window after capturing last frame
                     print('recording starting in 5 seconds...')
-                    time.sleep(3)
+                    time.sleep(2)
                     # has a couple additional second delay to start subprocess and run it
                     ret = subprocess.run(['python3', 'record_video.py', '-n', filename, '-a'], check=True)
                     if ret.returncode != 0:
