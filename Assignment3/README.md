@@ -69,9 +69,10 @@ C/C++: https://docs.luxonis.com/en/latest/
      precision, recall and Intersection over Union (IoU)).
 
 6. Fix a marker on a wall or a flat vertical surface.
-7. From a distance D, keeping the camera stationed static
-   (not handheld and mounted on a tripod or placed on a flat surface), capture an image such that the marker
-   is registered.
+
+   - From a distance D, keeping the camera stationed static
+     (not handheld and mounted on a tripod or placed on a flat surface), capture an image such that the marker
+     is registered.
 
    - Then translate the camera by T units along the axis parallel to the ground (horizontal) and
      then capture another image, with the marker being registered.
